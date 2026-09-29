@@ -14,14 +14,14 @@
    ===================================================================== */
 const CONFIG = {
   agency: {
-    name: "Ironclad",                 // big word in the logo
+    name: "Primed",                   // big word in the logo
     sub: "Contractor Agency",          // small line under it
-    legal: "Ironclad Contractor Agency LLC",
+    legal: "Primed Contractor Agency",   // e.g. "Adam D. Enterprises LLC dba Primed Contractor Agency"
     owner: "Adam",                    // your first name
     ownerFull: "Adam Nnoli",
     title: "Founder",
     photo: "",                        // URL to your photo (optional)
-    website: "ironcladcontractor.com",
+    website: "primedcontractor.com",
     terms: "#"                        // link to your terms page
   },
   client: {
@@ -43,14 +43,15 @@ const CONFIG = {
     setup: 15000,                     // anchor setup fee
     oto: 10000,                       // one-time offer setup fee (revealed on the call)
     monthly: 297,                     // hosting + AI stack
-    freeMonths: { lsa: 0, fb: 1, seo: 0, social: 0 },  // bonus months bundled into the one-time offer
-    paid: { lsa: false, fb: false, seo: false, social: false } // add-ons stacked on the monthly
+    freeMonths: { lsa: 0, fb: 0, seo: 0, social: 0, voice: 3 },  // bonus months bundled into the one-time offer
+    paid: { lsa: false, fb: false, seo: false, social: false, voice: false } // add-ons stacked on the monthly
   },
   addons: [
     { id: "lsa",    name: "Local Service Ads",  desc: "Google LSA campaign + lead-call routing.",            price: 1000 },
     { id: "fb",     name: "Facebook Ads",       desc: "Lead-form + retargeting campaigns, fresh creative weekly.", price: 2500 },
     { id: "seo",    name: "SEO",                desc: "Monthly content, technical SEO, ranking reports.",   price: 2500 },
-    { id: "social", name: "Social Media",       desc: "Organic IG + FB + TikTok content, 12 posts a month.", price: 500 }
+    { id: "social", name: "Social Media",       desc: "Organic IG + FB + TikTok content, 12 posts a month.", price: 500 },
+    { id: "voice",  name: "24/7 AI Receptionist", desc: "Answers missed + after-hours calls, books the inspection, texts you the details.", price: 297 }
   ],
   // Quick presets in the edit panel, by the client's yearly revenue
   presets: [
@@ -410,6 +411,16 @@ footer{background:var(--black);color:#9d9d9d;text-align:center;padding:48px 24px
 footer .logo{justify-content:center;margin-bottom:14px}
 footer p{max-width:560px;margin:6px auto}
 
+.vgrid{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;max-width:900px;margin:44px auto 0;text-align:left}
+.vcall{background:#111;color:#eee;border-radius:16px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid;gap:12px}
+.vhd{font:800 11px Montserrat;letter-spacing:1.5px;color:#3fd37b;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.vdot{width:8px;height:8px;border-radius:50%;background:#3fd37b;animation:pulse 1.4s infinite}
+.vl{display:flex;gap:12px;font-size:14px}.vl b{font:800 11px Montserrat;width:54px;flex:none;padding-top:2px;color:var(--gold)}.vl.u b{color:#9ab4ff}
+.vtext{display:flex;flex-direction:column;gap:18px}
+.vsms{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:18px;display:grid;gap:6px;font-size:14px;border-left:4px solid var(--green)}
+.vsms small{color:var(--muted);font-size:12px}.vsms b{font-family:Montserrat}
+.vlist{list-style:none;display:grid;gap:10px;font-weight:600}.vlist li:before{content:"✓ ";color:var(--green);font-weight:900}
+@media (max-width:980px){.vgrid{grid-template-columns:1fr}}
 /* Rep controls */
 .rep{position:fixed;right:18px;bottom:18px;z-index:60;display:none;gap:8px}
 .rep.on{display:flex}
@@ -474,7 +485,7 @@ footer p{max-width:560px;margin:6px auto}
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#" aria-label="Agency home">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 58 14v18c0 15-11 24-26 28C17 56 6 47 6 32V14z" fill="#a8322d"/><path d="M32 9 53 17v15c0 12-9 20-21 23-12-3-21-11-21-23V17z" fill="#0d0d0d"/><path d="M16 36 32 21l16 15h-5v11H21V36z" fill="#e3b14b"/><rect x="28.5" y="38" width="7" height="9" fill="#0d0d0d"/></svg>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14" fill="#161616" stroke="#2b2b2b"/><path d="M12 33 32 15l20 18" fill="none" stroke="#e3b14b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 32v14h26V32" fill="none" stroke="#e3b14b" stroke-width="4" stroke-linejoin="round" opacity=".55"/><path d="M11 45c9-4 21-5 42-1l-1 8c-19-4-31-3-41 1z" fill="#a8322d"/></svg>
       <div><div class="n" data-t="agency.name"></div><div class="s" data-t="agency.sub"></div></div>
     </a>
     <div class="prep">
@@ -543,7 +554,7 @@ footer p{max-width:560px;margin:6px auto}
       <div class="result reveal">
         <div class="ic">🏆 💰</div>
         <h3>More <span data-t="trade.plural"></span> sold.</h3>
-        <span class="tag">💵 CHA-CHING</span>
+        <span class="tag">💵 Cha-ching</span>
       </div>
     </div>
   </div>
@@ -635,6 +646,29 @@ footer p{max-width:560px;margin:6px auto}
       <div class="arrow">→</div>
       <div class="mob"><div class="lbl">🌙 After hours</div><div class="scr"><div class="t"><span data-t="client.short"></span><span>☰</span></div><div class="hero" style="background:linear-gradient(180deg,#27304f,#141827 70%,#0c0d14)"></div><div class="stick" style="background:var(--gold);color:#2a1d05">Book my free inspection</div></div></div>
     </div>
+  </div>
+
+  <div id="voiceDemo" style="display:none">
+  <div class="divider" style="margin:90px auto"></div>
+  <div class="wrap center">
+    <span class="pill">🎙️ 24/7 AI Receptionist</span>
+    <h2 class="h2" style="font-size:clamp(28px,3.8vw,44px);margin-top:14px">On a roof? After hours? <em>Your AI answers every call.</em></h2>
+    <p class="lead">When you can't pick up, a natural-sounding AI receptionist answers, asks the right questions, books the inspection on your calendar and texts you the details.</p>
+    <div class="vgrid">
+      <div class="vcall">
+        <div class="vhd"><span class="vdot"></span>Incoming call · 7:42 PM · answered by AI</div>
+        <div class="vl a"><b>AI</b><span id="v1"></span></div>
+        <div class="vl u"><b>Caller</b><span>Hi, a storm took some shingles off and now there's a leak in my bedroom.</span></div>
+        <div class="vl a"><b>AI</b><span>Sorry to hear that. We do free storm inspections. Can I get your address and a good time tomorrow?</span></div>
+        <div class="vl u"><b>Caller</b><span>45 Palm Ave. Morning is best.</span></div>
+        <div class="vl a"><b>AI</b><span id="v2"></span></div>
+      </div>
+      <div class="vtext">
+        <div class="vsms"><small>Text to you · 7:44 PM</small><b>🔔 New booked inspection</b><span>Storm leak, 45 Palm Ave<br>Tomorrow 8:00 AM<br>Call recording + transcript saved</span></div>
+        <ul class="vlist"><li>Answers 24/7, even while you're on a job</li><li>Books straight into your calendar</li><li>Every call recorded and summarized</li></ul>
+      </div>
+    </div>
+  </div>
   </div>
 </section>
 
@@ -855,6 +889,8 @@ footer p{max-width:560px;margin:6px auto}
     ["a", `You're booked for 8 AM. Putting ${cl.owner} on a quick call now to confirm. ✅`]
   ];
   $("#msgs").innerHTML = convo.map(([w,t]) => `<div class="msg ${w==="u"?"u":""}">${esc(t)}</div>`).join("");
+  $("#v1").textContent = `Thanks for calling ${cl.company}, this is the after-hours assistant. How can I help?`;
+  $("#v2").textContent = `You're booked for 8 AM tomorrow. ${cl.owner} will text you before heading over.`;
   $("#phoneQuote").textContent = `"Hi, it's ${cl.owner} with ${cl.company}, just confirming your 8 AM inspection at 123 Bay St…"`;
   const chatIO = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
@@ -920,6 +956,7 @@ footer p{max-width:560px;margin:6px auto}
     $("#oSave").textContent = `You save ${usd(save)} today`;
     $("#oto").classList.toggle("show", state.revealed);
     $("#otoBtn").style.display = state.revealed ? "none" : "";
+    $("#voiceDemo").style.display = (state.paid.voice || state.free.voice > 0) ? "" : "none";
     roi();
   }
   $("#otoBtn").addEventListener("click", () => { state.revealed = true; render(); $("#oto").scrollIntoView({behavior:"smooth",block:"center"}); });

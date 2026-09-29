@@ -37,7 +37,10 @@ const CONFIG = {
     domain: "palmettoridgeroofing.com",
     liveSite: "",                     // link to the generated site (Open live site button)
     heroImage: "",                    // screenshot of their generated site OR a hero photo
-    logo: ""                          // their logo URL (optional; text logo used if blank)
+    logo: "",                         // their logo URL (optional; text logo used if blank)
+    // Used for the site-architecture tree in the Formula section (or add ?services=a,b,c&areas=x,y,z to the link)
+    services: ["Roof Replacement", "Roof Repair", "Storm Damage", "Shingle Roofs", "Metal Roofs", "Tile Roofs", "Flat Roofs", "Roof Inspections"],
+    areas: ["Tampa", "St. Petersburg", "Clearwater", "Brandon", "Riverview", "Wesley Chapel", "Lutz", "Largo"]
   },
   trade: { noun: "roofing", plural: "roofs", single: "roof", pro: "roofer" },
   pricing: {
@@ -62,10 +65,54 @@ const CONFIG = {
     { label: "$1M–$3M",     setup: 15000, oto: 10000, monthly: 297 },
     { label: "$3M+",        setup: 20000, oto: 15000, monthly: 497 }
   ],
+  // The Proven Formula dropdowns. {city} {state} {company} {owner} {trade} {plural} {single} {pro} are filled in automatically.
+  // value = what that piece is worth on its own. Keep these in line with valueStack below.
+  formula: {
+    traffic: {
+      title: "Traffic", badge: "SEO · included", promise: "Get found first on Google, Maps and AI search, without paying for every click.",
+      items: [
+        { title: "SEO + AEO site architecture", value: "$7,500", tags: ["Service pages", "City pages", "Schema", "AI-ready"],
+          bullets: ["A dedicated page for every service you offer and every town you work in.", "Schema markup so Google and AI assistants read your services, areas and reviews correctly.", "FAQ answers written the way homeowners actually ask Google and ChatGPT.", "Internal links that pass authority between pages, so every new page lifts the rest."],
+          why: "Most local {trade} sites have one \"Services\" page. Yours will have a page built for each exact search, in each town." },
+        { title: "Google Business Profile + map pack", value: "$1,200", tags: ["Maps", "Categories", "Review sync"],
+          bullets: ["Categories, services and service areas set up to match your new pages.", "Website, profile and citations all show the same name, address and phone.", "Your best Google reviews synced onto your site automatically."],
+          why: "The map pack is where most \"near me\" calls come from. Your profile and your site now back each other up." }
+      ]
+    },
+    trust: {
+      title: "Trust", badge: "Built into your site", promise: "Look like the obvious, safe choice in the first 5 seconds.",
+      items: [
+        { title: "Proof above the fold", value: "$15,000", valueNote: "custom build", tags: ["Reviews", "License", "Insured", "Real photos"],
+          bullets: ["Star rating, review count and license number visible before anyone scrolls.", "Real crew, truck and project photos. No stock photos of strangers.", "Warranty, financing and guarantees spelled out in plain English.", "A short owner story, so they know who is showing up at their door."],
+          why: "Homeowners are letting someone into their home. The one who looks most proven gets the call." },
+        { title: "Review + reputation engine", value: "$2,400/yr", tags: ["Auto-requests", "Google reviews", "Alerts"],
+          bullets: ["After every job, your customer gets a text asking for a Google review.", "Happy customers go to Google. Unhappy ones come to you first, privately.", "New reviews appear on your site automatically."],
+          why: "Fresh reviews are proof that you are busy and trusted right now, not five years ago." },
+        { title: "Fast, secure hosting", value: "$1,800/yr", tags: ["SSL lock", "Speed", "Backups"],
+          bullets: ["SSL padlock, security monitoring and daily backups.", "Loads fast on a phone, even on a weak signal.", "Updates and fixes handled for you."],
+          why: "A slow or \"Not secure\" site makes people hit back before they read a word." }
+      ]
+    },
+    conversion: {
+      title: "Conversion", badge: "AI lead engine", promise: "Turn visitors into booked estimates, day or night.",
+      items: [
+        { title: "Instant callback + 24/7 AI chat", value: "$4,800/yr", tags: ["60-sec callback", "AI chat", "CRM"],
+          bullets: ["Form comes in, your phone rings within seconds, press 1 to be connected.", "AI chat answers questions and books estimates at 2 AM.", "Every lead lands in one CRM with text and email follow-up."],
+          why: "The first {pro} to call back usually wins the job. Now that's always you." },
+        { title: "Mobile booking that's one tap away", value: "Included", tags: ["Tap-to-call", "Sticky button", "Short form"],
+          bullets: ["A call and book button that follows them down every page on mobile.", "A short 5-field form. No long questionnaires.", "Clear next step on every page: call, text or book."],
+          why: "Most visitors are on their phone. If calling you takes more than one tap, they call someone else." },
+        { addon: "voice", title: "24/7 AI Receptionist", tags: ["Answers every call", "Books jobs", "Texts you details"],
+          bullets: ["Answers missed and after-hours calls in a natural voice.", "Asks the right questions and books the estimate on your calendar.", "Texts you the name, address and job details right away."],
+          why: "Every missed call is a job that goes to the next {pro} on Google." }
+      ]
+    }
+  },
   valueStack: [
     { item: "Custom website build (40+ pages)",           value: "$15,000" },
     { item: "AI lead engine (chat · instant callback · CRM)", value: "$4,800/yr" },
     { item: "SEO foundation + schema + AI-search setup",    value: "$7,500" },
+    { item: "Google Business Profile optimization",        value: "$1,200" },
     { item: "Hosting · SSL · security",                     value: "$1,800/yr" },
     { item: "Review + reputation engine",                   value: "$2,400/yr" }
   ],
@@ -196,12 +243,101 @@ section{padding:96px 0}
 .fcard .ic{font-size:28px}
 .fcard h3{font-weight:900;font-size:28px;margin:18px 0 4px;text-transform:uppercase;letter-spacing:-.5px}
 .fcard .sub{font-family:Montserrat;font-weight:700;font-size:12px;letter-spacing:1.2px;color:var(--red);text-transform:uppercase;min-height:36px}
-.how{margin-top:auto}
-.how summary{list-style:none;margin-top:18px;background:var(--red);color:#fff;border-radius:8px;box-shadow:0 4px 0 var(--red-d);padding:13px;text-align:center;font-family:Montserrat;font-weight:900;letter-spacing:2px;font-size:14px;cursor:pointer}
-.how summary::-webkit-details-marker{display:none}
-.how summary:after{content:" ▾"}
-.how[open] summary:after{content:" ▴"}
-.how ul{margin:16px 0 0 18px;font-size:14px;color:var(--ink-2);display:grid;gap:8px}
+.howbtn{margin-top:auto;border:0;width:100%;margin-top:22px;background:var(--red);color:#fff;border-radius:8px;box-shadow:0 4px 0 var(--red-d);padding:13px;font-family:Montserrat;font-weight:900;letter-spacing:2px;font-size:14px;transition:transform .15s,background .15s}
+.howbtn:after{content:" ▾";display:inline-block;transition:transform .2s}
+.howbtn[aria-expanded="true"]{background:var(--ink);box-shadow:0 4px 0 #000}
+.howbtn[aria-expanded="true"]:after{transform:rotate(180deg)}
+.fcard{transition:transform .2s,box-shadow .2s,border-color .2s;scroll-margin-top:110px}
+.fcard.on{transform:translateY(-4px);box-shadow:0 18px 40px rgba(168,50,45,.18);border-left-color:var(--red)}
+.fcard .hd,.fcard h3,.fcard .sub{cursor:default}
+
+/* Formula panel */
+.fpanel{position:relative;margin-top:22px;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.12);border-top:4px solid var(--red);animation:fin .35s ease}
+@keyframes fin{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.fpanel .ptr{position:absolute;top:-14px;width:24px;height:24px;background:var(--red);transform:rotate(45deg);border-radius:3px;left:var(--px,50%);margin-left:-12px}
+.fpanel .ptr:after{content:"";position:absolute;inset:4px 0 0 4px;background:#fff;border-radius:2px}
+.fin{position:relative;padding:34px 34px 30px}
+.fin .ph{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.fin .ph .k{font:800 12px Montserrat;letter-spacing:2px;color:var(--red);text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.fin .ph .k .bdg{background:#fdf2f1;border:1.5px solid rgba(168,50,45,.3);border-radius:999px;padding:4px 10px;letter-spacing:1.2px;font-size:10.5px}
+.fin .ph h4{font:900 clamp(22px,2.6vw,30px)/1.15 Montserrat;margin-top:8px;max-width:640px;letter-spacing:-.4px}
+.fin .ptot{text-align:right}
+.fin .ptot small{display:block;font:800 10.5px Montserrat;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase}
+.fin .ptot b{font:900 30px Montserrat;color:var(--ink)}
+.fin .ptot b span{font-size:15px;color:var(--muted);font-weight:800}
+.fitems{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:24px}
+.fitem{border:1px solid var(--line);border-radius:14px;padding:22px 22px 20px;background:linear-gradient(180deg,#fff,#fcfaf6);display:flex;flex-direction:column;min-width:0}
+.fitem .top2{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.fitem .n{font:900 12px Montserrat;color:#fff;background:var(--ink);border-radius:6px;padding:5px 8px;flex:none}
+.fitem .val{text-align:right;font:900 20px Montserrat;color:var(--red);line-height:1.1;white-space:nowrap}
+.fitem .val small{display:block;font:800 9.5px Montserrat;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-top:3px}
+.fitem .val.inc{color:var(--green);font-size:15px}
+.fitem h5{font:900 18px/1.2 Montserrat;margin:14px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:700 11px Montserrat;background:var(--grey);color:var(--ink-2);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.fitem ul{list-style:none;margin:14px 0 0;display:grid;gap:8px;font-size:14px;color:var(--ink-2)}
+.fitem li{display:flex;gap:9px}
+.fitem li:before{content:"✓";flex:none;color:var(--green);font-weight:900}
+.why{margin-top:auto;padding-top:16px}
+.why div{background:#fff7e6;border-left:4px solid var(--gold);border-radius:8px;padding:12px 14px;font-size:13.5px;color:var(--ink-2)}
+.why b{display:block;font:900 10.5px Montserrat;letter-spacing:1.8px;color:var(--gold-d);text-transform:uppercase;margin-bottom:3px}
+.fitem.addon{background:linear-gradient(180deg,#141414,#0b0b0b);color:#fff;border-color:#2a2a2a}
+.fitem.addon h5{color:#fff}
+.fitem.addon ul{color:#ddd}
+.fitem.addon .n{background:var(--gold);color:#2a1d05}
+.fitem.addon .val{color:var(--gold)}
+.fitem.addon .val small{color:#aaa}
+.fitem.addon .chip{background:#262626;color:#eee}
+.fitem.addon .why div{background:#1d1a12;color:#e9e2d0}
+.fitem .flag{display:inline-block;margin-top:10px;font:900 10.5px Montserrat;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;padding:5px 9px;background:var(--gold);color:#2a1d05;align-self:flex-start}
+.fitem .flag.opt{background:#262626;color:var(--gold);border:1px solid #3a3a3a}
+
+/* Site architecture tree */
+.arch{margin-top:28px;border-radius:16px;background:var(--black);color:#fff;padding:30px 28px;overflow:hidden}
+.arch .ah{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+.arch .ah .k{font:800 11px Montserrat;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+.arch .ah h5{font:900 22px Montserrat;margin-top:6px}
+.arch .ah p{color:#aaa;font-size:13.5px;max-width:420px}
+.tree{margin-top:24px;display:grid;gap:14px;justify-items:center}
+.tnode{font:800 12.5px Montserrat;border-radius:8px;padding:9px 14px;background:#1c1c1c;border:1px solid #333;white-space:nowrap}
+.tnode.home{background:var(--red);border-color:var(--red);font-size:14px;padding:11px 20px}
+.tnode.home small{display:block;font-weight:600;font-size:10.5px;opacity:.85;letter-spacing:.5px}
+.tier{width:100%;text-align:center}
+.tier .lbl{font:800 10px Montserrat;letter-spacing:2px;color:#8d8d8d;text-transform:uppercase;margin-bottom:8px}
+.tier .nodes{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.tnode.pil{background:#241c0d;border-color:#5a4418;color:var(--gold)}
+.tnode.pil i{font-style:normal;color:#c7a65a;font-weight:700;margin-left:4px}
+.vline{width:2px;height:16px;background:linear-gradient(var(--red),#444)}
+.silos{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.silo{background:#121212;border:1px solid #2a2a2a;border-radius:12px;padding:14px;text-align:left;min-width:0}
+.silo .lbl{font:800 10px Montserrat;letter-spacing:2px;color:#8d8d8d;text-transform:uppercase;margin-bottom:10px}
+.silo .nodes{display:flex;flex-wrap:wrap;gap:6px}
+.silo .c{font:700 11.5px Montserrat;background:#1f1f1f;border:1px solid #333;border-radius:999px;padding:5px 10px;color:#eee;white-space:nowrap}
+.silo.combo{grid-column:1/-1}
+.silo.combo .c{border-color:#4a2422;background:#221312;color:#f1c9c6}
+.silo .more{color:#8d8d8d;background:transparent;border-style:dashed}
+.astats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:22px}
+.astats div{background:#151515;border:1px solid #2a2a2a;border-radius:10px;padding:12px 8px;text-align:center}
+.astats b{display:block;font:900 26px Montserrat;color:#fff}
+.astats div.tot{background:var(--red);border-color:var(--red)}
+.astats div.tot small{color:#fff}
+.astats small{font:800 9.5px Montserrat;letter-spacing:1.4px;color:#9a9a9a;text-transform:uppercase}
+
+/* Search example */
+.serp{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;position:relative}
+.serp .cy{position:absolute;top:-11px;right:18px;background:var(--gold);color:#2a1d05;font:900 10.5px Montserrat;letter-spacing:1.5px;text-transform:uppercase;border-radius:6px;padding:5px 9px}
+.serp .q{display:flex;align-items:center;gap:10px;border:1px solid #dfe1e5;border-radius:999px;padding:9px 16px;font-size:14px;color:#202124;box-shadow:0 1px 6px rgba(32,33,36,.1)}
+.serp .q span{color:#9aa0a6}
+.serp .ai{margin-top:14px;background:#f4f7fc;border-radius:10px;padding:12px 14px;font-size:13.5px;color:#3c4043}
+.serp .ai b{display:block;font-size:12px;color:#1a73e8;margin-bottom:4px}
+.serp .res{margin-top:14px}
+.serp .res .u{font-size:12.5px;color:#4d5156}
+.serp .res .t{font-size:18px;color:#1a0dab;margin:2px 0}
+.serp .res p{font-size:13.5px;color:#4d5156}
+.upg{margin-top:16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;border:1.5px dashed var(--line);border-radius:12px;padding:14px 18px;font-size:14px;color:var(--ink-2)}
+.upg b{font-family:Montserrat}
+.fnav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.fnav .note{font-size:13px;color:var(--muted)}
 .op{align-self:center;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--gold);color:var(--red);font-weight:900;font-size:22px;box-shadow:0 0 0 5px rgba(227,177,75,.25)}
 .op.eq{background:#fff;border:3px solid var(--red)}
 .result{border-radius:var(--radius);padding:28px;background:linear-gradient(135deg,#f5d58a 0%,#e3b14b 55%,#c8922c 100%);box-shadow:0 18px 40px rgba(200,146,44,.35);display:flex;flex-direction:column;justify-content:center}
@@ -464,6 +600,13 @@ footer p{max-width:560px;margin:6px auto}
   .cover .grid,.roi,.about{grid-template-columns:minmax(0,1fr)}
   .cover .grid>*,.roi>*,.about>*{min-width:0}
   .formula .row{grid-template-columns:1fr}
+  .fpanel{margin:6px 0 4px}
+  .fin{padding:26px 18px 22px}
+  .arch{padding:22px 14px}
+  .silos{grid-template-columns:minmax(0,1fr)}
+  .astats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .astats div.tot{grid-column:1/-1}
+  .fin .ptot{text-align:left}
   .op{justify-self:center}
   .reasons,.tgrid,.tl{grid-template-columns:1fr}
   .tl:before{display:none}
@@ -527,31 +670,22 @@ footer p{max-width:560px;margin:6px auto}
     <h2 class="h2 reveal">The Proven <em>Formula.</em></h2>
     <p class="lead reveal">Three levers. When all three work together, the phone rings.</p>
     <div class="row">
-      <div class="fcard reveal">
+      <div class="fcard reveal" data-lever="traffic">
         <div class="hd"><span class="num">01</span><span class="ic">📈</span></div>
         <h3>Traffic</h3><div class="sub">Show up first on Google + AI search</div>
-        <details class="how"><summary>How?</summary><ul>
-          <li>A page for every service and every city you work in.</li>
-          <li>Schema + Google Business Profile tuned so you show in the map pack and AI answers.</li>
-          <li>Optional Facebook ads and Local Service Ads for leads from day one.</li></ul></details>
+        <button class="howbtn" type="button" aria-expanded="false">How?</button>
       </div>
       <div class="op">+</div>
-      <div class="fcard reveal">
+      <div class="fcard reveal" data-lever="trust">
         <div class="hd"><span class="num">02</span><span class="ic">🤝</span></div>
         <h3>Trust</h3><div class="sub">Win them in the first 5 seconds</div>
-        <details class="how"><summary>How?</summary><ul>
-          <li>Real crew photos, real reviews and license numbers above the fold.</li>
-          <li>Warranty, financing and insurance-claim help, spelled out plainly.</li>
-          <li>Local proof: your service areas, licenses and projects near them.</li></ul></details>
+        <button class="howbtn" type="button" aria-expanded="false">How?</button>
       </div>
       <div class="op">+</div>
-      <div class="fcard reveal">
+      <div class="fcard reveal" data-lever="conversion">
         <div class="hd"><span class="num">03</span><span class="ic">📅</span></div>
         <h3>Conversion</h3><div class="sub">Turn visitors into booked estimates</div>
-        <details class="how"><summary>How?</summary><ul>
-          <li>Instant callback: your phone rings seconds after a form comes in.</li>
-          <li>24/7 AI chat that answers questions and books inspections.</li>
-          <li>Tap-to-call and a sticky booking button on every mobile screen.</li></ul></details>
+        <button class="howbtn" type="button" aria-expanded="false">How?</button>
       </div>
       <div class="op eq">=</div>
       <div class="result reveal">
@@ -560,6 +694,7 @@ footer p{max-width:560px;margin:6px auto}
         <span class="tag">💵 Cha-ching</span>
       </div>
     </div>
+    <div class="fpanel" id="fpanel" hidden><i class="ptr"></i><div class="fin" id="fin"></div></div>
   </div>
 </section>
 
@@ -576,7 +711,7 @@ footer p{max-width:560px;margin:6px auto}
 </section>
 
 <!-- 4. AI INFRASTRUCTURE -->
-<section>
+<section id="engine">
   <div class="wrap center">
     <span class="pill reveal"><i></i>AI Lead Engine</span>
     <h2 class="h2 reveal" style="margin-top:18px">Your website never sleeps.<br><em>Neither does your AI.</em></h2>
@@ -836,6 +971,7 @@ footer p{max-width:560px;margin:6px auto}
   const qs = new URLSearchParams(location.search);
   const map = {company:"company",legal:"legal",short:"short",owner:"owner",ownerfull:"ownerFull",city:"city",state:"state",phone:"phone",domain:"domain",site:"liveSite",hero:"heroImage",logo:"logo"};
   for (const [k,v] of Object.entries(map)) if (qs.get(k)) CONFIG.client[v] = qs.get(k);
+  for (const k of ["services","areas"]) if (qs.get(k)) CONFIG.client[k] = qs.get(k).split(",").map(x=>x.trim()).filter(Boolean);
   const C = CONFIG, cl = C.client;
 
   const get = p => p.split(".").reduce((o,k)=>o?.[k], C);
@@ -950,6 +1086,118 @@ footer p{max-width:560px;margin:6px auto}
   $("#vstack").innerHTML = C.valueStack.map(v => `<div class="vrow"><span class="c"><span class="tick">✓</span>${esc(v.item)}</span><s>${esc(v.value)}</s></div>`).join("");
   $("#incl").innerHTML = C.included.map(i => `<div>${esc(i)}</div>`).join("");
 
+  /* ---------- Formula dropdowns ---------- */
+  const tok = t => String(t).replace(/\{(\w+)\}/g, (m,k) => ({city:cl.city,state:cl.state,company:cl.company,owner:cl.owner,trade:C.trade.noun,plural:C.trade.plural,single:C.trade.single,pro:C.trade.pro}[k] ?? m));
+  const T = s => esc(tok(s));
+  const parseVal = v => { const m = String(v||"").replace(/,/g,"").match(/\$(\d+(?:\.\d+)?)/); return m ? { n:+m[1], yr:/\/yr/.test(v), mo:/\/mo/.test(v) } : null; };
+  const svcList = () => (cl.services && cl.services.length) ? cl.services : [`${cap(C.trade.noun)} installation`, `${cap(C.trade.noun)} repair`, `${cap(C.trade.noun)} replacement`, "Inspections", "Emergency service", "Maintenance"];
+  const areaList = () => (cl.areas && cl.areas.length) ? cl.areas : [cl.city, `North ${cl.city}`, `South ${cl.city}`, `East ${cl.city}`, `West ${cl.city}`];
+  let openLever = null;
+
+  function archHTML(){
+    const sv = svcList(), ar = areaList();
+    const core = ["About", "Reviews", "Project Gallery", "Financing", "FAQ", "Contact"];
+    const pillars = [["Services", sv.length], ["Service Areas", ar.length], ["Why Us"], ["Our Process"], ["Warranty"], ["Guides"]];
+    const topSvc = sv.slice(0, 3);
+    const combos = topSvc.length * ar.length;
+    const total = 1 + core.length + pillars.length + sv.length + ar.length + combos;
+    const comboChips = [];
+    topSvc.forEach(x => ar.slice(0,2).forEach(a => comboChips.push(`${x} in ${a}`)));
+    return `<div class="arch">
+      <div class="ah"><div><div class="k">Your site architecture</div><h5>Built to rank for every job, in every town.</h5></div>
+        <p>Every page links up to its pillar and back to your home page, so Google and AI tools understand exactly what you do and where.</p></div>
+      <div class="tree">
+        <div class="tnode home">🏠 Home<small>${esc(cl.domain || "yourdomain.com")}</small></div>
+        <div class="vline"></div>
+        <div class="tier"><div class="lbl">Tier 1 · Core pages</div><div class="nodes">${core.map(c=>`<span class="tnode">${esc(c)}</span>`).join("")}</div></div>
+        <div class="vline"></div>
+        <div class="tier"><div class="lbl">Tier 2 · Pillar pages</div><div class="nodes">${pillars.map(([p,n])=>`<span class="tnode pil">${esc(p)}${n?`<i>+${n}</i>`:""}</span>`).join("")}</div></div>
+        <div class="vline"></div>
+        <div class="silos">
+          <div class="silo"><div class="lbl">Service silo · ${sv.length} pages</div><div class="nodes">${sv.map(x=>`<span class="c">${esc(x)}</span>`).join("")}</div></div>
+          <div class="silo"><div class="lbl">Location silo · ${ar.length} pages</div><div class="nodes">${ar.map(x=>`<span class="c">📍 ${esc(x)}</span>`).join("")}</div></div>
+          <div class="silo combo"><div class="lbl">Service × city pages · ${combos} pages</div><div class="nodes">${comboChips.map(x=>`<span class="c">${esc(x)}</span>`).join("")}${combos>comboChips.length?`<span class="c more">+${combos-comboChips.length} more</span>`:""}</div></div>
+        </div>
+      </div>
+      <div class="astats">
+        <div><b>${core.length + 1}</b><small>Core pages</small></div>
+        <div><b>${pillars.length}</b><small>Pillar pages</small></div>
+        <div><b>${sv.length + ar.length}</b><small>Silo pages</small></div>
+        <div><b>${combos}</b><small>Service × city</small></div>
+        <div class="tot"><b>${total}</b><small>Total pages</small></div>
+      </div>
+    </div>
+    <div class="serp"><span class="cy">Example · this could be you</span>
+      <div class="q"><span>🔍</span>${esc(sv[0].toLowerCase())} ${esc(ar[0].toLowerCase())}</div>
+      <div class="ai"><b>✦ AI answer</b>For ${esc(sv[0].toLowerCase())} in ${esc(ar[0])}, homeowners often look at ${esc(cl.company)}, a licensed local ${esc(C.trade.pro)} with strong reviews, free estimates and financing options…</div>
+      <div class="res"><div class="u">${esc(cl.domain || "yourdomain.com")} › ${esc(sv[0].toLowerCase().replace(/\s+/g,"-"))} › ${esc(ar[0].toLowerCase().replace(/[^a-z0-9]+/g,"-"))}</div>
+        <div class="t">${esc(sv[0])} in ${esc(ar[0])}, ${esc(cl.state)} | ${esc(cl.company)}</div>
+        <p>Licensed and insured ${esc(C.trade.noun)} crew serving ${esc(ar[0])} and nearby. Free estimates, financing available. Call ${esc(cl.phone || "today")}.</p></div>
+    </div>`;
+  }
+
+  function leverHTML(key){
+    const L = C.formula[key]; if (!L) return "";
+    let tot = 0, totMo = 0;
+    const items = L.items.map((it, i) => {
+      let valHTML, cls = "", flag = "";
+      if (it.addon){
+        const a = addon(it.addon);
+        if (!a) return "";
+        cls = " addon";
+        const freeM = state.free[a.id] || 0, paid = state.paid[a.id];
+        valHTML = `<div class="val">${usd(a.price)}/mo<small>${a.setupValue ? `+ ${usd(a.setupValue)} setup · ` : ""}standalone</small></div>`;
+        flag = paid ? `<span class="flag">Included in your plan</span>` : (freeM > 0 && state.revealed) ? `<span class="flag">${freeM} months free with today's offer</span>` : `<span class="flag opt">Optional upgrade</span>`;
+      } else {
+        const pv = parseVal(it.value);
+        if (pv){ if (pv.mo) totMo += pv.n; else tot += pv.n; }
+        valHTML = pv ? `<div class="val">${esc(it.value)}<small>${esc(it.valueNote || "value")}</small></div>` : `<div class="val inc">${esc(it.value || "Included")}</div>`;
+      }
+      return `<div class="fitem${cls}">
+        <div class="top2"><span class="n">${String(i+1).padStart(2,"0")}</span>${valHTML}</div>
+        <h5>${T(it.title)}</h5>
+        <div class="chips">${(it.tags||[]).map(t=>`<span class="chip">${T(t)}</span>`).join("")}</div>
+        ${flag}
+        <ul>${(it.bullets||[]).map(b=>`<li><span>${T(b)}</span></li>`).join("")}</ul>
+        ${it.why ? `<div class="why"><div><b>Why this works</b>${T(it.why)}</div></div>` : ""}
+      </div>`;
+    }).join("");
+    const keys = Object.keys(C.formula), idx = keys.indexOf(key), next = keys[idx+1];
+    const seo = addon("seo");
+    const extra = key === "traffic" ? archHTML() + (seo ? `<div class="upg"><span>Want to grow even faster after launch? <b>Monthly SEO content + ranking reports</b></span><b>${usd(seo.price)}/mo · optional</b></div>` : "") : "";
+    const cta = next ? `<button class="btn btn-red" type="button" data-go="${next}">Next: ${esc(C.formula[next].title)} →</button>`
+                     : `<a class="btn btn-red" href="#engine" data-close>See the AI lead engine in action ↓</a>`;
+    return `<div class="ph"><div><div class="k">${String(idx+1).padStart(2,"0")} · ${T(L.title)} <span class="bdg">${T(L.badge||"")}</span></div><h4>${T(L.promise)}</h4></div>
+        <div class="ptot"><small>${esc(L.title)} value${L.items.some(i=>/\/yr/.test(i.value||""))?" · year one":""}</small><b>${usd(tot)}</b></div></div>
+      <div class="fitems">${items}</div>
+      ${extra}
+      <div class="fnav"><span class="note">Values shown are what each piece costs when bought on its own.</span>${cta}</div>`;
+  }
+
+  function openFormula(key, scroll){
+    const panel = $("#fpanel"), row = $(".formula .row");
+    $$(".fcard[data-lever]").forEach(c => { const on = c.dataset.lever === key; c.classList.toggle("on", on); c.querySelector(".howbtn").setAttribute("aria-expanded", on); });
+    if (!key){ panel.hidden = true; openLever = null; return; }
+    openLever = key;
+    const card = $(`.fcard[data-lever="${key}"]`);
+    const stacked = matchMedia("(max-width:980px)").matches;
+    if (stacked) card.after(panel); else row.after(panel);
+    panel.hidden = false;
+    $("#fin").innerHTML = leverHTML(key);
+    panel.style.animation = "none"; panel.offsetHeight; panel.style.animation = "";
+    const pr = panel.getBoundingClientRect(), cr = card.getBoundingClientRect();
+    panel.style.setProperty("--px", stacked ? "50%" : (cr.left + cr.width/2 - pr.left) + "px");
+    if (scroll) card.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+  $$(".fcard[data-lever] .howbtn").forEach(b => b.addEventListener("click", () => {
+    const key = b.closest(".fcard").dataset.lever;
+    openFormula(openLever === key ? null : key);
+  }));
+  $("#fpanel").addEventListener("click", e => {
+    const go = e.target.closest("[data-go]"); if (go) openFormula(go.dataset.go, true);
+  });
+  addEventListener("resize", () => { if (openLever) openFormula(openLever); });
+
   function render(){
     $("#pSetup").textContent = usd(state.setup);
     $("#pMonthly").innerHTML = usd(monthlyTotal()) + "<small>/MO</small>";
@@ -965,6 +1213,7 @@ footer p{max-width:560px;margin:6px auto}
     $("#oto").classList.toggle("show", state.revealed);
     $("#otoBtn").style.display = state.revealed ? "none" : "";
     $("#voiceDemo").style.display = (state.paid.voice || state.free.voice > 0) ? "" : "none";
+    if (openLever) $("#fin").innerHTML = leverHTML(openLever);
     roi();
   }
   $("#otoBtn").addEventListener("click", () => { state.revealed = true; render(); $("#oto").scrollIntoView({behavior:"smooth",block:"center"}); });

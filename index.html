@@ -52,7 +52,8 @@ const CONFIG = {
     { id: "fb",     name: "Facebook Ads",       desc: "Lead-form + retargeting campaigns, fresh creative weekly.", price: 2500 },
     { id: "seo",    name: "SEO",                desc: "Monthly content, technical SEO, ranking reports.",   price: 2500 },
     { id: "social", name: "Social Media",       desc: "Organic IG + FB + TikTok content, 12 posts a month.", price: 500 },
-    { id: "voice",  name: "24/7 AI Receptionist", desc: "Answers missed + after-hours calls, books the inspection, texts you the details.", price: 297 }
+    { id: "voice",  name: "24/7 AI Receptionist", desc: "Answers missed + after-hours calls, books the inspection, texts you the details.", price: 497, setupValue: 1000, lockedRate: 297 }
+    // price = standalone monthly price (the anchor). setupValue = setup & training fee waived when given free. lockedRate = what one-time-offer clients pay after the free months.
   ],
   // Quick presets in the edit panel, by the client's yearly revenue
   presets: [
@@ -421,6 +422,10 @@ footer p{max-width:560px;margin:6px auto}
 .vsms{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:18px;display:grid;gap:6px;font-size:14px;border-left:4px solid var(--green)}
 .vsms small{color:var(--muted);font-size:12px}.vsms b{font-family:Montserrat}
 .vlist{list-style:none;display:grid;gap:10px;font-weight:600}.vlist li:before{content:"✓ ";color:var(--green);font-weight:900}
+.vprice{background:var(--ink);color:#fff;border-radius:14px;padding:18px 20px;display:grid;gap:4px;border:1px solid #2a2a2a}
+.vprice small{font:800 11px Montserrat;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase}
+.vprice b{font:900 34px/1.1 Montserrat}.vprice b span{font-size:15px;color:#aaa;font-weight:700}
+.vprice em{font-style:normal;color:#ccc;font-size:13.5px}.vprice p{color:#9d9d9d;font-size:13px;margin-top:4px}
 @media (max-width:980px){.vgrid{grid-template-columns:1fr}}
 /* Rep controls */
 .rep{position:fixed;right:18px;bottom:18px;z-index:60;display:none;gap:8px}
@@ -664,6 +669,7 @@ footer p{max-width:560px;margin:6px auto}
       <div class="vtext">
         <div class="vsms"><small>Text to you · 7:44 PM</small><b>🔔 New booked inspection</b><span>Storm leak, 45 Palm Ave<br>Tomorrow 8:00 AM<br>Call recording + transcript saved</span></div>
         <ul class="vlist"><li>Answers 24/7, even while you're on a job</li><li>Books straight into your calendar</li><li>Every call recorded and summarized</li></ul>
+        <div class="vprice" id="vPrice"></div>
       </div>
     </div>
   </div>
@@ -887,6 +893,8 @@ footer p{max-width:560px;margin:6px auto}
     ["a", `You're booked for 8 AM. Putting ${cl.owner} on a quick call now to confirm. ✅`]
   ];
   $("#msgs").innerHTML = convo.map(([w,t]) => `<div class="msg ${w==="u"?"u":""}">${esc(t)}</div>`).join("");
+  const VA = C.addons.find(a => a.id === "voice");
+  if (VA) $("#vPrice").innerHTML = `<small>Standalone value</small><b>${usd(VA.price)}<span>/mo</span></b>${VA.setupValue ? `<em>+ ${usd(VA.setupValue)} setup when bought on its own · included with your website build</em>` : ""}<p>Answering every call, 24/7, for less than the cost of one missed job.</p>`;
   $("#v1").textContent = `Thanks for calling ${cl.company}, this is the after-hours assistant. How can I help?`;
   $("#v2").textContent = `You're booked for 8 AM tomorrow. ${cl.owner} will text you before heading over.`;
   $("#phoneQuote").textContent = `"Hi, it's ${cl.owner} with ${cl.company}, just confirming your 8 AM inspection at 123 Bay St…"`;
@@ -933,9 +941,11 @@ footer p{max-width:560px;margin:6px auto}
   let state = { setup:P.setup, oto:P.oto, monthly:P.monthly, free:{...P.freeMonths}, paid:{...P.paid}, revealed:false };
   const history = [];
   const addon = id => C.addons.find(a => a.id === id);
-  const monthlyTotal = () => state.monthly + C.addons.filter(a => state.paid[a.id]).reduce((s,a)=>s+a.price,0);
+  const addonRate = a => (state.revealed && a.lockedRate) ? a.lockedRate : a.price;
+  const monthlyTotal = () => state.monthly + C.addons.filter(a => state.paid[a.id]).reduce((s,a)=>s+addonRate(a),0);
   const currentSetup = () => state.revealed ? state.oto : state.setup;
-  const bonusValue = () => C.addons.reduce((s,a)=>s + (state.free[a.id]||0)*a.price, 0);
+  const bonusOf = a => (state.free[a.id]||0) > 0 ? state.free[a.id]*a.price + (a.setupValue||0) : 0;
+  const bonusValue = () => C.addons.reduce((s,a)=>s + bonusOf(a), 0);
 
   $("#vstack").innerHTML = C.valueStack.map(v => `<div class="vrow"><span class="c"><span class="tick">✓</span>${esc(v.item)}</span><s>${esc(v.value)}</s></div>`).join("");
   $("#incl").innerHTML = C.included.map(i => `<div>${esc(i)}</div>`).join("");
@@ -944,12 +954,12 @@ footer p{max-width:560px;margin:6px auto}
     $("#pSetup").textContent = usd(state.setup);
     $("#pMonthly").innerHTML = usd(monthlyTotal()) + "<small>/MO</small>";
     const paid = C.addons.filter(a => state.paid[a.id]);
-    $("#pAdds").textContent = paid.length ? `Includes ${usd(state.monthly)}/mo website + AI engine, plus ${paid.map(a=>`${a.name} (${usd(a.price)}/mo)`).join(", ")}` : "Website hosting + AI lead engine";
+    $("#pAdds").textContent = paid.length ? `Includes ${usd(state.monthly)}/mo website + AI engine, plus ${paid.map(a=>`${a.name} (${usd(addonRate(a))}/mo)`).join(", ")}` : "Website hosting + AI lead engine";
     $("#oWas").textContent = usd(state.setup);
     $("#oNow").textContent = usd(state.oto);
     const bonuses = C.addons.filter(a => state.free[a.id] > 0);
     $("#oBonus").innerHTML = `<li>Setup: ${usd(state.setup)} → ${usd(state.oto)}</li>` +
-      bonuses.map(a => `<li>${esc(a.name)}: ${state.free[a.id]} month${state.free[a.id]>1?"s":""} free (${usd(a.price*state.free[a.id])} value)</li>`).join("");
+      bonuses.map(a => `<li>${esc(a.name)}: ${state.free[a.id]} month${state.free[a.id]>1?"s":""} free${a.setupValue?` + ${usd(a.setupValue)} setup waived`:""} <b>(${usd(bonusOf(a))} value)</b>${a.lockedRate?`<br><small style="font-weight:500;color:var(--muted)">Then ${usd(a.lockedRate)}/mo locked in for life (normally ${usd(a.price)}/mo)</small>`:""}</li>`).join("");
     const save = (state.setup - state.oto) + bonusValue();
     $("#oSave").textContent = `You save ${usd(save)} today`;
     $("#oto").classList.toggle("show", state.revealed);
